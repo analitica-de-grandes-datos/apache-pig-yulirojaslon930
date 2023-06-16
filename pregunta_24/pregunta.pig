@@ -20,3 +20,6 @@ $ pig -x local -f pregunta.pig
 */
 
 
+lines = LOAD 'data.csv' USING PigStorage(',') AS (id:chararray, name:chararray, lastname:chararray, birth:chararray, color:chararray, qty:chararray);
+extracted_data = FOREACH lines GENERATE REGEX_EXTRACT(birth, '....-(..)-..', 1) AS month;
+STORE extracted_data INTO 'output' USING PigStorage (',');
